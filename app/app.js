@@ -29,8 +29,8 @@ app.get('/',(req,res) =>{
 })
 
 // Rutas
-app.use("api/ofertas",ofertasRoutes)
-app.use("api/auth",authRoutes)
+app.use("/api/ofertas",ofertasRoutes)
+app.use("/api/auth",authRoutes)
 
-app.use(require('./routes/routes'));
+// app.use(require('./routes/routes'));
 export default app;
