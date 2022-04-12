@@ -3,10 +3,12 @@ const router = Router();
 
 //Importamos todos los métodos
 import * as ofertaCtrl from '../controllers/oferta.controller'
+//Importamos middlewares
+import { verifyToken } from '../middlewares/index'
 
 router.post('/', ofertaCtrl.createOferta)
 
-router.get('/', ofertaCtrl.getOfertas)
+router.get('/',verifyToken,ofertaCtrl.getOfertas)
 
 router.get('/:ofertaId', ofertaCtrl.getOfertabyId)
 
