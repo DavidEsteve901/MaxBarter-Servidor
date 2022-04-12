@@ -37,7 +37,7 @@ export const registro = async (req, res) => {
             res.status(200).json({token})
             // res.json(user);
         }else{
-            res.json("Usuario ya existe")
+            res.status(401).json({message: "El nombre de usuario ya existe"})
         }
         
         
