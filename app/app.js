@@ -2,6 +2,9 @@ const express = require('express');
 import morgan from 'morgan';
 import pkg from '../package.json'
 
+//Importamos cors
+const cors = require('cors')
+
 //Rutas 
 import ofertasRoutes from "./routes/ofertas.routes"
 import authRoutes from './routes/auth.routes'
@@ -13,6 +16,7 @@ app.set('pkg',pkg)
 
 // Middleware
 // Para poder rellenar el req.body
+app.use(cors()) //Establecemos el cors para las peticiones
 app.use(express.json()); //Para que pueda entender los objetos JSON
 app.use(express.urlencoded({ extended: false }));
 
@@ -29,8 +33,8 @@ app.get('/',(req,res) =>{
 })
 
 // Rutas
-app.use("api/ofertas",ofertasRoutes)
-app.use("api/auth",authRoutes)
+app.use("/api/ofertas",ofertasRoutes)
+app.use("/api/auth",authRoutes)
 
-app.use(require('./routes/routes'));
+// app.use(require('./routes/routes'));
 export default app;
