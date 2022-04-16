@@ -7,3 +7,10 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
     res.json('signIn')
 }
+
+export const currentUser = async (req, res) => {
+    
+    const user = jwt.decode(req.body.token);
+    
+    res.status(200).json(user)
+}
