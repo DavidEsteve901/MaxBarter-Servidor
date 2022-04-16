@@ -50,17 +50,6 @@ export const registro = async (req, res) => {
     
 }
 
-<<<<<<< HEAD
-export const signIn = async (req, res) => {
-    res.json('signIn')
-}
-
-export const currentUser = async (req, res) => {
-    
-    const user = jwt.decode(req.body.token);
-    
-    res.status(200).json(user)
-=======
 export const login = async (req, res) => {
     
     const { userName, password } = req.body;
@@ -78,5 +67,11 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: usuarioEx.userName }, process.env.SECRET_KEY_TOKEN )
 
     res.status(200).json({token})
->>>>>>> 41141597ad7893f5f7ce04ad5aad69925c263395
+}
+
+export const currentUser = async (req, res) => {
+    
+    const user = jwt.decode(req.body.token);
+    
+    res.status(200).json(user)
 }
