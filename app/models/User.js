@@ -30,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // Usuario tiene un domicilio o una direccion
     // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
+    User.hasMany(models.Producto,{ as: 'Productos'})
+
+    User.belongsTo(models.ComunidadAutonoma)
+
+    User.hasMany(models.Oferta,{ as: 'userRecibe',foreignKey:'userRecibe'})
+
+    User.hasMany(models.Oferta,{ as: 'userPide',foreignKey:'userPide'})
+    
   };
 
   //MÉTODOS para el Modelo de USER

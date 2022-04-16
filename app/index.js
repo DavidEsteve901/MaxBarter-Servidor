@@ -1,5 +1,6 @@
 import app from './app';
 const { sequelize } = require('./models/index'); 
+
 // import  { sequelize }  from './models/index';
 
 // Setting
@@ -14,7 +15,7 @@ app.listen(PORT, function () {
     //     console.log("Se ha establecido la conexión");
     // })
 
-    sequelize.sync({ force: false }).then(() => {
+    sequelize.sync({ force: true }).then(() => {
         console.log("Se ha establecido la conexión");
     })
 });

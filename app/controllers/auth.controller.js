@@ -64,14 +64,18 @@ export const login = async (req, res) => {
     if(!matchPassword) return res.status(401).json({token: null, message: "Contraseña incorrecta"})
 
     //Generamos el token
-    const token = jwt.sign({ id: usuarioEx.userName }, process.env.SECRET_KEY_TOKEN )
+    const token = jwt.sign({ userName: usuarioEx.userName }, process.env.SECRET_KEY_TOKEN )
 
     res.status(200).json({token})
 }
 
 export const currentUser = async (req, res) => {
     
-    const user = jwt.decode(req.body.token);
-    
-    res.status(200).json(user)
+    if(req.body.token){
+        const user = jwt.decode(req.body.token);
+        console.log(req.body.token)
+        return res.status(200).json(user)
+    }
+
+    res.status(401).json()
 }
