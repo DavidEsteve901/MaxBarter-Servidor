@@ -1,5 +1,5 @@
 export const createOferta = (req,res) =>{
-
+    
 }
 
 export const getOfertas = (req,res) =>{
@@ -14,6 +14,6 @@ export const updateOfertaById = (req,res) =>{
     
 }
 
-export const deleteofertaById = (req,res) =>{
+export const deleteOfertaById = (req,res) =>{
     
 }

@@ -8,6 +8,8 @@ const cors = require('cors')
 //Rutas 
 import ofertasRoutes from "./routes/ofertas.routes"
 import authRoutes from './routes/auth.routes'
+import productosRoutes from './routes/productos.routes'
+
 
 //CONFIGURO EXPRESS
 const app = express();
@@ -35,6 +37,7 @@ app.get('/',(req,res) =>{
 // Rutas
 app.use("/api/ofertas",ofertasRoutes)
 app.use("/api/auth",authRoutes)
+app.use("/api/productos",productosRoutes)
 
 // app.use(require('./routes/routes'));
 export default app;

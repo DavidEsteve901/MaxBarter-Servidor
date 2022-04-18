@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   
   const Tipo = sequelize.define('Tipo', {
 
-    url: DataTypes.STRING,
+    nombre: DataTypes.STRING,
 
   }, {
     tableName: "Tipo"

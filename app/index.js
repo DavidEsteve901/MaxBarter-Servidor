@@ -15,7 +15,7 @@ app.listen(PORT, function () {
     //     console.log("Se ha establecido la conexión");
     // })
 
-    sequelize.sync({ force: true }).then(() => {
+    sequelize.sync({ force: false }).then(() => {
         console.log("Se ha establecido la conexión");
     })
 });

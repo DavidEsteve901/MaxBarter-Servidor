@@ -21,11 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     // Usuario tiene un domicilio o una direccion
     // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
 
-    Producto.belongsTo(models.User)
-
-    Producto.belongsTo(models.Tipo)
-
-    Producto.hasMany(models.Imagen,{ as: 'imagenes',foreignKey:'imagenId'})
+    Producto.hasMany(models.Imagen,{ as: 'imagenes',foreignKey:'producto'})
 
     Producto.hasMany(models.Oferta,{ as: 'productoPide',foreignKey:'productoPide'})
 

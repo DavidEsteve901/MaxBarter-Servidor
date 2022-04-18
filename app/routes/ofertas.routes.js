@@ -14,7 +14,7 @@ router.get('/:ofertaId', ofertaCtrl.getOfertabyId)
 
 router.put('/:ofertaId', ofertaCtrl.updateOfertaById)
 
-router.delete('/:ofertaId', ofertaCtrl.deleteofertaById)
+router.delete('/:ofertaId', ofertaCtrl.deleteOfertaById)
 
 
 

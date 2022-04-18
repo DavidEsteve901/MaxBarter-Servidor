@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     // Usuario tiene un domicilio o una direccion
     // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
 
-    Imagen.belongsTo(models.Producto)
   };
 
   return Imagen;
