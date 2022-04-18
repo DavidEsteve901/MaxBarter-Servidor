@@ -31,6 +31,9 @@ export const getProductos = async (req, res) => {
         const productos = await Producto.findAll({
             include:{
                 association: "propietario",
+                include:{
+                    association: "comunidadAutonoma"
+                }
             }
         });
 

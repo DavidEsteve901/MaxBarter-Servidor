@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   
   const ComunidadAutonoma = sequelize.define('ComunidadAutonoma', {
 
+    
     nombre: DataTypes.STRING,
 
   }, {
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     // Usuario tiene un domicilio o una direccion
     // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
 
-    ComunidadAutonoma.hasMany(models.User,{ as: 'Users'})
+    ComunidadAutonoma.hasMany(models.User,{ as: 'users', foreignKey:'comunidadAutonomaId'})
   };
 
   return ComunidadAutonoma;

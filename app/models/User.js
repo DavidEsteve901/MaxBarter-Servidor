@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 
     password: DataTypes.STRING,
     correo: DataTypes.STRING,
+    telefono: DataTypes.STRING,
 
     nombre: DataTypes.STRING,
     apellidos: DataTypes.STRING,
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.hasMany(models.Oferta,{ as: 'userPide',foreignKey:'user2'})
 
-    
+    User.belongsTo(models.ComunidadAutonoma,{ as: 'comunidadAutonoma', foreignKey:'comunidadAutonomaId'})
   };
 
   //MÉTODOS para el Modelo de USER

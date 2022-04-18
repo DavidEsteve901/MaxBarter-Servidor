@@ -7,10 +7,13 @@ module.exports = {
 
     let users = [
       // { user_name: "david", password: 123, correo: "davidesteve@gmail.com", nombre:"David", apellidos:"Esteve Vicente" },
-      { user_name: "david", password: "$2a$10$NqZj.Y9iryOThr/Rt22Ntefj8SHq6InvgAxzJQlOkaj2YvKs9nCqO", correo: "davidestevevicente@gmail.com", nombre:"David", apellidos:"Esteve Vicente" },
+      { user_name: "david", password: "$2a$10$NqZj.Y9iryOThr/Rt22Ntefj8SHq6InvgAxzJQlOkaj2YvKs9nCqO", correo: "davidestevevicente@gmail.com", nombre:"David", apellidos:"Esteve Vicente", telefono:"94776342",comunidad_autonoma_id:10},
+      { user_name: "ruben", password: "$2a$10$NqZj.Y9iryOThr/Rt22Ntefj8SHq6InvgAxzJQlOkaj2YvKs9nCqO", correo: "rubenestevevicente@gmail.com", nombre:"Ruben", apellidos:"Esteve Vicente", telefono:"94776342",comunidad_autonoma_id:11},
     ];
 
     return queryInterface.bulkInsert('users', users, {});
+
+  
   },
 
   // Esto se ejecuta cuando se deshace la siembra
