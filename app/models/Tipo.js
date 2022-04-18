@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
 
   }, {
-    tableName: "Tipo"
+    tableName: "Tipo",
+    timestamps: false,
     
   });
 
   Tipo.associate = function(models) {
    
-    Tipo.hasMany(models.Producto,{ as: 'Productos'})
+    Tipo.hasMany(models.Producto,{ as: 'productos', foreignKey:'tipo'})
   };
 
   return Tipo;

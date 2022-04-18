@@ -7,10 +7,11 @@ module.exports = (sequelize, DataTypes) => {
   
   const ComunidadAutonoma = sequelize.define('ComunidadAutonoma', {
 
-    url: DataTypes.STRING,
+    nombre: DataTypes.STRING,
 
   }, {
-    tableName: "ComunidadAutonoma"
+    tableName: "ComunidadAutonoma",
+    timestamps: false,
     
   });
 

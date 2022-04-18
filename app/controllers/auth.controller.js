@@ -32,7 +32,7 @@ export const registro = async (req, res) => {
             await user.save();
 
             //Creamos TOKEN
-            const token = jwt.sign({ id: user.userName }, process.env.SECRET_KEY_TOKEN )
+            const token = jwt.sign({ userName: user.userName }, process.env.SECRET_KEY_TOKEN )
 
             res.status(200).json({token})
             // res.json(user);
@@ -70,12 +70,34 @@ export const login = async (req, res) => {
 }
 
 export const currentUser = async (req, res) => {
-    
-    if(req.body.token){
-        const user = jwt.decode(req.body.token);
-        console.log(req.body.token)
-        return res.status(200).json(user)
-    }
 
-    res.status(401).json()
+
+    try {
+        if(req.body.token){
+            const { userName } = jwt.decode(req.body.token);
+    
+            const user = await User.findOne({
+                // include:{
+                //     association: "productos",
+                // },
+                where:{
+                    userName
+                }
+            })
+    
+            console.log(req.body.token)
+            return res.status(200).json({
+                data: user
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+    
+
+    res.status(401).json("Token no enviado")
 }

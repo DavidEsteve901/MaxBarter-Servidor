@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     url: DataTypes.STRING,
 
   }, {
-    tableName: "Imagen"
+    tableName: "Imagen",
+    timestamps: false,
     
   });
 

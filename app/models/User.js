@@ -30,11 +30,12 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // Usuario tiene un domicilio o una direccion
     // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
-    User.hasMany(models.Producto,{ as: 'Productos',foreignKey:'user'})
+    User.hasMany(models.Producto,{ as: 'productos',foreignKey:'user'})
 
-    User.hasMany(models.Oferta,{ as: 'userRecibe',foreignKey:'userRecibe'})
+    User.hasMany(models.Oferta,{ as: 'userRecibe',foreignKey:'user1'})
 
-    User.hasMany(models.Oferta,{ as: 'userPide',foreignKey:'userPide'})
+    User.hasMany(models.Oferta,{ as: 'userPide',foreignKey:'user2'})
+
     
   };
 

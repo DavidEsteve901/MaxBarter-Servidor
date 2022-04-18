@@ -28,7 +28,11 @@ export const createProducto = async (req, res) => {
 
 export const getProductos = async (req, res) => {
     try {
-        const productos = await Producto.findAll();
+        const productos = await Producto.findAll({
+            include:{
+                association: "propietario",
+            }
+        });
 
         return res.status(200).json({
             data: productos

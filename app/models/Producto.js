@@ -23,9 +23,13 @@ module.exports = (sequelize, DataTypes) => {
 
     Producto.hasMany(models.Imagen,{ as: 'imagenes',foreignKey:'producto'})
 
-    Producto.hasMany(models.Oferta,{ as: 'productoPide',foreignKey:'productoPide'})
+    Producto.hasMany(models.Oferta,{ as: 'productoPide',foreignKey:'producto1'})
 
-    Producto.hasMany(models.Oferta,{ as: 'productoRecibe',foreignKey:'productoRecibe'})
+    Producto.hasMany(models.Oferta,{ as: 'productoRecibe', foreignKey:'producto2'})
+
+    Producto.belongsTo(models.User,{ as: 'propietario', foreignKey:'user'})
+
+
   };
 
   return Producto;
