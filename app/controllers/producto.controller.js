@@ -68,12 +68,33 @@ export const getProductosByPage = async (req, res) => {
         }
 
         if(q){
+            //Dependiendo de los fistros de busqueda que se pasen lo agregará a la condicion where
+            const filter = {}
+            if(q.titulo){
+                filter.titulo = {[Op.like]: `%${q.titulo}%`}
+            }
+
+            if(q.tipo){
+                filter.titulo = {[Op.like]: `%${q.tipo}%`}
+            }
+
+            if(q.comunidadAutonoma){
+                filter.titulo = {[Op.like]: `%${q.comunidadAutonoma}%`}
+            }
+
+
             search = {
-                where: {
-                    titulo:{
-                        [Op.like]: `%${q}%`
-                    }
-                }
+                where: filter
+                    // titulo:{
+                    //     [Op.like]: `%${q.titulo}%`
+                    // },
+                    // user:{
+                    //     [Op.like]: `%${q.tipo}%`
+                    // },
+                    // comunidadAutonoma:{
+                    //     [Op.like]: `%${q.comunidadAutonoma}%`
+                    // }
+                
             };
         }
 
