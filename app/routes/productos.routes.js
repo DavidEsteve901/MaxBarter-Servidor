@@ -6,9 +6,9 @@ import * as productoCtrl from '../controllers/producto.controller'
 //Importamos middlewares
 import { verifyToken } from '../middlewares/index'
 
-router.post('/', productoCtrl.createProducto)
+router.post('/',verifyToken,productoCtrl.createProducto)
 
-router.get('/',productoCtrl.getProductos)
+router.get('/',verifyToken,productoCtrl.getProductos)
 
 router.get('/:id', productoCtrl.getProductobyId)
 
