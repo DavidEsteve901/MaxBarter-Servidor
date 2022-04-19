@@ -10,6 +10,8 @@ router.post('/',verifyToken,productoCtrl.createProducto)
 
 router.get('/',verifyToken,productoCtrl.getProductos)
 
+router.post('/page',productoCtrl.getProductosByPage)
+
 router.get('/:id', productoCtrl.getProductobyId)
 
 router.put('/:id', productoCtrl.updateProductoById)
