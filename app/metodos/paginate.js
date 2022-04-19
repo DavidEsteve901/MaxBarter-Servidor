@@ -5,10 +5,7 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
 
         
         //Crea opciones del objeto
-        var options = {
-            offset: getOffset(page, limit),
-            limit: limit,
-        };
+        var options = {};
 
         // Comprueba si el objeto bucado esta vacio
         if (Object.keys(search).length) {
@@ -24,6 +21,12 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
         if(associations){
             options['include'] = associations;
         }
+
+        //Ponemos la página
+        options['offset'] =  getOffset(page, limit);
+
+        //Ponemos el límite de productos
+        options['limit'] = limit;
 
         // Le paso las opciones (no lo hago por varible porque no funcionan las asociaciones)
         // asimilar el modelo, asimilar las opciones
