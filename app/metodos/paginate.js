@@ -1,12 +1,12 @@
-export const paginate = async (model, pageSize, pageLimit, search = {}, order = [], transform,associations = {}) => {
+export const paginate = async (model, pageSize, pageLimit, search = {}, order = [], transform,associations) => {
     try {
         const limit = parseInt(pageLimit, 10) || 10;
         const page = parseInt(pageSize, 10) || 1;
 
-        // Crea opciones del objeto
-        let options = {
+        
+        //Crea opciones del objeto
+        var options = {
             offset: getOffset(page, limit),
-            include:associations,
             limit: limit,
         };
 
@@ -20,6 +20,12 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
             options['order'] = order;
         }
 
+        //Si le pasamos asociaciones las añade
+        if(associations){
+            options['include'] = associations;
+        }
+
+        // Le paso las opciones (no lo hago por varible porque no funcionan las asociaciones)
         // asimilar el modelo, asimilar las opciones
         let {count, rows} = await model.findAndCountAll(options);
 
@@ -28,6 +34,7 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
            rows = transform(rows);
         }
 
+        
         return {
             previousPage: getPreviousPage(page),
             currentPage: page,
@@ -36,6 +43,7 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
             limit: limit,
             data: rows
         }
+
     } catch (error) {
         console.log(error);
     }

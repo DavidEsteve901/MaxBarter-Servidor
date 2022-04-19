@@ -62,9 +62,9 @@ export const getProductosByPage = async (req, res) => {
 
         const associations = {
             association: "propietario",
-                include:{
-                    association: "comunidadAutonoma"
-                }
+            include:{
+                association: "comunidadAutonoma"
+            }
         }
 
         if(q){
@@ -86,7 +86,7 @@ export const getProductosByPage = async (req, res) => {
             search = {
                 where: filter
                     // titulo:{
-                    //     [Op.like]: `%${q.titulo}%`
+                    //     [Op.like]: `%${q}%`
                     // },
                     // user:{
                     //     [Op.like]: `%${q.tipo}%`
@@ -114,7 +114,7 @@ export const getProductosByPage = async (req, res) => {
         const transform = null;
 
         //Método de paianción en el que le pasas el Modelo, page, limit, search object, order, transform y asociaciones
-        const products = await paginate(Producto, page, limit, search, order, transform,associations);
+        const products = await paginate(Producto, page, limit, search, order, transform, associations);
 
         return res.status(200).send({
             success: true,
