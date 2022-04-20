@@ -32,7 +32,7 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
         // asimilar el modelo, asimilar las opciones
         let {count, rows} = await model.findAndCountAll(options);
 
-        console.log(rows)
+
         // compruebe si la transformación es una función y no es nula
         if (transform && typeof transform === 'function') {
            rows = transform(rows);
