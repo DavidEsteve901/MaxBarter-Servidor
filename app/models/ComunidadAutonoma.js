@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   ComunidadAutonoma.associate = function(models) {
-    // Usuario tiene un domicilio o una direccion
-    // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
+   
 
     ComunidadAutonoma.hasMany(models.User,{ as: 'users', foreignKey:'comunidadAutonomaId'})
   };

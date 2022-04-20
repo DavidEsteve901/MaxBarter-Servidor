@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Imagen.associate = function(models) {
-    // Usuario tiene un domicilio o una direccion
-    // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
+    
 
   };
 

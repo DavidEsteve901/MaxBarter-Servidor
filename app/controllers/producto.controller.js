@@ -60,17 +60,22 @@ export const getProductosByPage = async (req, res) => {
         let search = {};
         let order = [];
 
-        const associations = {
-            association: "propietario",
-
-            include:{
-                association: "comunidadAutonoma"
+        const associations = [
+            {
+                association: "propietario",
+                include:{
+                    association: "comunidadAutonoma",
+                }
+            },
+            {
+                association: "tipoProducto",
+                
             }
-        }
+        ]
 
         //Comprobamos si tiene el atributo de comunidad autonoma lo añadimos al filtro por el include (ya que así podemos filtrar por los atributos de la asociación)
         if(q.comunidadAutonoma){
-            associations['where'] = {
+            associations[0]['where'] = {
                 comunidadAutonomaId: q.comunidadAutonoma
             }
         }
