@@ -62,8 +62,16 @@ export const getProductosByPage = async (req, res) => {
 
         const associations = {
             association: "propietario",
+
             include:{
                 association: "comunidadAutonoma"
+            }
+        }
+
+        //Comprobamos si tiene el atributo de comunidad autonoma lo añadimos al filtro por el include (ya que así podemos filtrar por los atributos de la asociación)
+        if(q.comunidadAutonoma){
+            associations['where'] = {
+                comunidadAutonomaId: q.comunidadAutonoma
             }
         }
 
@@ -75,26 +83,16 @@ export const getProductosByPage = async (req, res) => {
             }
 
             if(q.tipo){
-                filter.titulo = {[Op.like]: `%${q.tipo}%`}
+                filter.tipo = {[Op.like]: `%${q.tipo}%`}
             }
 
-            if(q.comunidadAutonoma){
-                filter.titulo = {[Op.like]: `%${q.comunidadAutonoma}%`}
-            }
+            // if(q.comunidadAutonoma){
+            //     filter.propietario = {[Op.like]: `%${q.comunidadAutonoma}%`}
+            // }
 
 
             search = {
                 where: filter
-                    // titulo:{
-                    //     [Op.like]: `%${q}%`
-                    // },
-                    // user:{
-                    //     [Op.like]: `%${q.tipo}%`
-                    // },
-                    // comunidadAutonoma:{
-                    //     [Op.like]: `%${q.comunidadAutonoma}%`
-                    // }
-                
             };
         }
 
