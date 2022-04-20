@@ -2,13 +2,13 @@ import { Router } from "express";
 const router = Router();
 
 //Importamos todos los métodos
-import * as comunidadAutonomaCtrl from '../controllers/comunidadAutonoma.controller'
+import * as tipoCtrl from '../controllers/tipo.controller'
 //Importamos middlewares
 import { verifyToken } from '../middlewares/index'
 
 
 
-router.get('/',comunidadAutonomaCtrl.getComunidadesAutonomas)
+router.get('/',tipoCtrl.getTipos)
 
 
 

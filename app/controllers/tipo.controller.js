@@ -1,17 +1,17 @@
 
-
-const { ComunidadAutonoma } = require('../models/index')
+const { Tipo } = require('../models/index')
 
 // importamos variables de entorno
 require('dotenv').config();
 
-export const getComunidadesAutonomas = async (req, res) => {
+export const getTipos = async (req, res) => {
     try {
-        const ComunidadesAutonomas = await ComunidadAutonoma.findAll();
+        const tipos = await Tipo.findAll();
 
         return res.status(200).json({
-            data: ComunidadesAutonomas
+            data: tipos
         })
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -20,4 +20,3 @@ export const getComunidadesAutonomas = async (req, res) => {
         });
     }
 }
-

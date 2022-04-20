@@ -11,6 +11,8 @@ import authRoutes from './routes/auth.routes'
 import productosRoutes from './routes/productos.routes'
 import userRoutes from './routes/user.routes'
 import comunidadAutonomaRoutes from './routes/comunidadAutonoma.routes'
+import tipoRoutes from './routes/tipo.routes'
+
 
 
 //CONFIGURO EXPRESS
@@ -42,6 +44,7 @@ app.use("/api/auth",authRoutes)
 app.use("/api/productos",productosRoutes)
 app.use("/api/user",userRoutes)
 app.use("/api/comunidadAutonoma",comunidadAutonomaRoutes)
+app.use("/api/tipo",tipoRoutes)
 
 
 // app.use(require('./routes/routes'));
