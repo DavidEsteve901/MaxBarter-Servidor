@@ -12,6 +12,8 @@ import productosRoutes from './routes/productos.routes'
 import userRoutes from './routes/user.routes'
 import comunidadAutonomaRoutes from './routes/comunidadAutonoma.routes'
 import tipoRoutes from './routes/tipo.routes'
+import imagenRoutes from './routes/imagen.routes'
+
 
 
 
@@ -45,6 +47,7 @@ app.use("/api/productos",productosRoutes)
 app.use("/api/user",userRoutes)
 app.use("/api/comunidadAutonoma",comunidadAutonomaRoutes)
 app.use("/api/tipo",tipoRoutes)
+app.use("/api/imagen",imagenRoutes)
 
 
 // app.use(require('./routes/routes'));
