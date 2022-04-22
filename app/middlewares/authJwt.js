@@ -5,7 +5,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken')
 
 export const verifyToken = async (req,res,next) =>{
-    console.log(req.headers.Authorization);
+
     //Si no tiene la cabecera no tiene acceso
     if(!req.headers.authorization){
         return res.status(401).json("No tienes acceso")

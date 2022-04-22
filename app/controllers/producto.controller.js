@@ -80,6 +80,13 @@ export const getProductosByPage = async (req, res) => {
             }
         }
 
+        //Comprobamos si tiene el atributo de usuario lo añadimos al filtro por el include 
+        if(q.userName){
+            associations[0]['where'] = {
+                userName: q.userName
+            }
+        }
+
         if(q){
             //Dependiendo de los fistros de busqueda que se pasen lo agregará a la condicion where
             const filter = {}
