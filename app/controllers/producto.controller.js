@@ -147,7 +147,19 @@ export const getProductobyId = async (req, res) => {
         const producto = await Producto.findOne({
             where: {
                 id
-            }
+            },
+            include:[
+                {
+                    association: "propietario",
+                    include:{
+                        association: "comunidadAutonoma",
+                    }
+                },
+                {
+                    association: "tipoProducto",
+                    
+                }
+            ]
         });
 
         return res.status(200).json({
