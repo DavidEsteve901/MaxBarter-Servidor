@@ -177,7 +177,7 @@ export const getProductobyId = async (req, res) => {
 
 export const updateProductoById = async (req, res) => {
     const { id } = req.params;
-    const { titulo, descripcion, match } = req.body;
+    const { titulo, descripcion, match ,tipo} = req.body;
 
     try {
 
@@ -192,7 +192,8 @@ export const updateProductoById = async (req, res) => {
         producto.update({
             titulo,
             descripcion,
-            match
+            match,
+            tipo
         })
 
         if (producto) {

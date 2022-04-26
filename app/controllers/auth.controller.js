@@ -77,15 +77,15 @@ export const currentUser = async (req, res) => {
             const { userName } = jwt.decode(req.body.token);
     
             const user = await User.findOne({
-                // include:{
-                //     association: "productos",
-                // },
+                include:{
+                    association: "comunidadAutonoma",
+                },
                 where:{
                     userName
                 }
             })
     
-            console.log(req.body.token)
+            // console.log(req.body.token)
             return res.status(200).json({
                 data: user
             })
