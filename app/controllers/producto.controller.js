@@ -1,4 +1,9 @@
+import { response } from 'express';
+import { send } from 'process';
 import { paginate } from '../metodos/paginate';
+
+const path = require('path');
+const fs = require('fs');
 
 const { uploadImgsProducto }= import('../middlewares/uploadImagenesProductos')
 const { Producto } = require('../models')
@@ -285,6 +290,60 @@ export const uploadImagenes = async (req, res) => {
         return res.status(200).json({
             message: 'Imagenes creadas correctamente',
         })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const getImagenes = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        console.log(id)
+        const imagenes = await Imagen.findAll({
+            where:{
+                producto: id
+            }
+        });
+
+        if(!imagenes){
+            return res.status(404).json("El producto no tiene imagenes")
+        }
+
+        var files = []
+
+        imagenes.forEach( img => {
+            files.push(img.url)
+        });
+
+
+        return res.status(200).json(files)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const getImagenProducto = async (req, res) => {
+    try {
+        const  { url }  = req.body
+        
+        let img = path.join(__dirname, '..', 'uploads', url) ;
+
+        if(!img){
+            return res.status(404).json("No existe la imagen")
+        }
+
+        res.sendFile(img)
+
     } catch (error) {
         console.log(error);
         res.status(500).json({

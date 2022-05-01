@@ -1,3 +1,5 @@
+
+
 const { User } = require('../models')
 const path = require("path")
 
@@ -80,7 +82,7 @@ export const getImagenPerfil = async (req, res) => {
 
         let img = path.join(__dirname, '..', 'uploads', Usuario.imgPerfil) ;
 
-
+    
         res.sendFile(img)
 
     } catch (error) {

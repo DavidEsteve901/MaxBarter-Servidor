@@ -10,8 +10,6 @@ const storage = multer.diskStorage({
         const ext = file.originalname.split('.').pop()
         const fileName =  Date.now() + '_imgProducto' + '.' + ext;
 
-        
-        
 
         cb(null,fileName);
     }

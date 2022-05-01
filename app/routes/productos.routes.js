@@ -24,6 +24,10 @@ router.delete('/:id', productoCtrl.deleteProductoById)
 //Subir imagenes de producto
 router.post('/uploadImages/:idProducto',verifyToken, uploadImgsProducto.array('imagenes') ,productoCtrl.uploadImagenes)
 
+//Coger imagenes
+router.post('/imagenes',verifyToken, productoCtrl.getImagenes)
+router.post('/imagen',verifyToken, productoCtrl.getImagenProducto)
+
 
 //Ruta que devuelve productos de un usuario
 router.get('/user/:userName', productoCtrl.getProductsByUser)
