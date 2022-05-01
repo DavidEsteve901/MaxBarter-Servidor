@@ -1,7 +1,11 @@
 import { paginate } from '../metodos/paginate';
 
+const { uploadImgsProducto }= import('../middlewares/uploadImagenesProductos')
 const { Producto } = require('../models')
+const { Imagen } = require('../models')
+
 const { Op } = require('sequelize')
+
 
 export const createProducto = async (req, res) => {
     const { titulo, descripcion, match, user} = req.body;
@@ -252,6 +256,35 @@ export const getProductsByUser = async (req, res) => {
             data: productos
         })
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const uploadImagenes = async (req, res) => {
+
+
+    try {
+        const { idProducto } = req.params;
+        const { files } = req;
+
+        //Creamos tantas imagenes como ficheros pasados
+
+        files.forEach(async file => {
+            await Imagen.create({
+                url: file.filename,
+                producto: idProducto
+            })
+        });
+        
+
+        return res.status(200).json({
+            message: 'Imagenes creadas correctamente',
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({

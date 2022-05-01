@@ -8,9 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   const Producto = sequelize.define('Producto', {
 
     titulo: DataTypes.STRING,
-    descripcion: DataTypes.STRING(1300) ,
+    descripcion: DataTypes.STRING,
 
     match: DataTypes.BOOLEAN,
+
+    
 
   }, {
     tableName: "Producto"
@@ -18,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Producto.associate = function(models) {
+    // Usuario tiene un domicilio o una direccion
+    // User.hasOne(models.Address, { as: "domicilio", foreignKey: "user_id" });
 
     Producto.hasMany(models.Imagen,{ as: 'imagenes',foreignKey:'producto'})
 
@@ -28,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     Producto.belongsTo(models.User,{ as: 'propietario', foreignKey:'user'})
 
     Producto.belongsTo(models.Tipo,{ as: 'tipoProducto', foreignKey:'tipo'})
+
+
 
   };
 
