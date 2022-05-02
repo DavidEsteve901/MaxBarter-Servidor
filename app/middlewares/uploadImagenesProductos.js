@@ -7,9 +7,11 @@ const storage = multer.diskStorage({
     },
     filename: function(req,file,cb){
         // const id = req.params.idProducto;
-        const ext = file.originalname.split('.').pop()
-        const fileName =  Date.now() + '_imgProducto' + '.' + ext;
+        console.log(file)
+        
+        const ext = file.mimetype.split('/').pop()
 
+        const fileName =  Date.now() + '_imgProducto' + '.' + ext;
 
         cb(null,fileName);
     }

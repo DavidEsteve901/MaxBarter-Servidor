@@ -3,7 +3,7 @@ import { send } from 'process';
 import { paginate } from '../metodos/paginate';
 
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
 
 const { uploadImgsProducto }= import('../middlewares/uploadImagenesProductos')
 const { Producto } = require('../models')
@@ -277,15 +277,40 @@ export const uploadImagenes = async (req, res) => {
         const { idProducto } = req.params;
         const { files } = req;
 
-        //Creamos tantas imagenes como ficheros pasados
-
-        files.forEach(async file => {
-            await Imagen.create({
-                url: file.filename,
+        const imagenes = await Imagen.findAll({
+            where: {
                 producto: idProducto
+            }
+        })
+
+
+        //Antes elimino aquellas imagenes que tiene guardadas el producto
+        Promise.all(imagenes.map(img => fs.unlink(path.join(__dirname, '..', 'uploads', img.url))))
+        .then(async() => {
+            console.log('All files removed')
+
+            //Eliminamos las relaciones creadas en el modelo Imagen de aquellas que hemos eliminado
+            await Imagen.destroy({
+                where: {
+                    producto: idProducto
+                }
             })
-        });
-        
+
+            //Creamos tantas imagenes como ficheros pasados (creamos la relacion)
+            files.forEach(async file => {
+                await Imagen.create({
+                    url: file.filename,
+                    producto: idProducto
+                })
+            });
+        })
+        .catch(err => {
+            console.error('Error al eliminar imagenes existentes', err)
+            res.status(401).json({
+                message: "Error al eliminar imagenes existentes"
+            })
+        })
+
 
         return res.status(200).json({
             message: 'Imagenes creadas correctamente',
@@ -320,7 +345,6 @@ export const getImagenes = async (req, res) => {
             files.push(img.url)
         });
 
-
         return res.status(200).json(files)
 
     } catch (error) {
@@ -352,3 +376,4 @@ export const getImagenProducto = async (req, res) => {
         });
     }
 }
+
