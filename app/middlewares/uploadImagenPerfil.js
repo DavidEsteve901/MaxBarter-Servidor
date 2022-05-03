@@ -6,9 +6,10 @@ const storage = multer.diskStorage({
         cb(null,path.join(__dirname, '..', 'uploads'))
     },
     filename: function(req,file,cb){
-        const id = req.params.id;
-        const ext = file.originalname.split('.').pop()
-        const fileName = id + '_imgPerfil' + ext;
+        // const id = req.params.id;
+
+        const ext = file.mimetype.split('/').pop()
+        const fileName = Date.now() + '_imgPerfil' + '.' + ext;
 
         req.file_name = fileName; //aqui estamos seteando un campo en nuestro objeto request
         
@@ -17,6 +18,6 @@ const storage = multer.diskStorage({
     }
 });
 
-const uploadImgPerfil = multer({storage:storage}).single('img_perfil')
+const uploadImgPerfil = multer({storage})
 
 module.exports = uploadImgPerfil;
