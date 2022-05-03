@@ -1,6 +1,8 @@
 
 
 const { User } = require('../models')
+const { Producto } = require('../models')
+
 const path = require("path")
 const fs = require('fs').promises;
 
@@ -93,6 +95,8 @@ export const getImagenPerfil = async (req, res) => {
         });
     }
 }
+
+
 
 export const uploadImagenPerfil = async (req, res) => {
 

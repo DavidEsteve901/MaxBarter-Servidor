@@ -7,20 +7,22 @@ const fs = require('fs').promises;
 
 const { uploadImgsProducto }= import('../middlewares/uploadImagenesProductos')
 const { Producto } = require('../models')
+const { User } = require('../models')
 const { Imagen } = require('../models')
 
 const { Op } = require('sequelize')
 
 
 export const createProducto = async (req, res) => {
-    const { titulo, descripcion, match, user} = req.body;
+    const { titulo, descripcion, user,tipo} = req.body;
 
     try {
         let newProducto = await Producto.create({
             titulo: titulo,
             descripcion: descripcion,
-            match: match,
-            user
+            user,
+            match: false,
+            tipo
         })
 
         if (newProducto) {
@@ -184,6 +186,40 @@ export const getProductobyId = async (req, res) => {
     }
 }
 
+export const getProductosByUser = async (req, res) => {
+    try {
+        const { userName } = req.params;
+        const productos = await Producto.findAll({
+            include:[
+                {
+                    association: "propietario",
+                    where:{
+                        userName
+                    },
+                    include:{
+                        association: "comunidadAutonoma",
+                    }
+                },
+                {
+                    association: "tipoProducto",
+                    
+                }
+            ]
+        });
+
+        return res.status(200).json({
+            data: productos
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
 export const updateProductoById = async (req, res) => {
     const { id } = req.params;
     const { titulo, descripcion, match ,tipo} = req.body;
@@ -246,29 +282,6 @@ export const deleteProductoById = async (req, res) => {
 }
 
 
-export const getProductsByUser = async (req, res) => {
-
-
-    try {
-        const { userName } = req.params;
-        const productos = await Producto.findAll({
-            where: {
-                user: userName
-            }
-        })
-
-        return res.status(200).json({
-            data: productos
-        })
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: 'Se produjo un error',
-            data: {}
-        });
-    }
-}
 
 export const uploadImagenes = async (req, res) => {
 

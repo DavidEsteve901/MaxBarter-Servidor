@@ -21,18 +21,15 @@ router.put('/:id', productoCtrl.updateProductoById)
 
 router.delete('/:id', productoCtrl.deleteProductoById)
 
+//Productos por usuario
+router.get('/user/:userName', productoCtrl.getProductosByUser)
+
 //Subir imagenes de producto
 router.post('/uploadImages/:idProducto',verifyToken, uploadImgsProducto.array('files') ,productoCtrl.uploadImagenes)
 
 //Coger imagenes
 router.post('/imagenes',verifyToken, productoCtrl.getImagenes)
 router.post('/imagen',verifyToken, productoCtrl.getImagenProducto)
-
-
-
-
-//Ruta que devuelve productos de un usuario
-router.get('/user/:userName', productoCtrl.getProductsByUser)
 
 
 
