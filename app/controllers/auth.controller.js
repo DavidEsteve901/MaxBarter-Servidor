@@ -32,7 +32,7 @@ export const registro = async (req, res) => {
             await user.save();
 
             //Creamos TOKEN
-            const token = jwt.sign({ userName: user.userName }, process.env.SECRET_KEY_TOKEN )
+            const token = jwt.sign({ userName: user.userName }, process.env.SECRET_KEY_TOKEN, { expiresIn: "12h" } )
 
             res.status(200).json({token})
             // res.json(user);
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
     if(!matchPassword) return res.status(401).json({token: null, message: "Contraseña incorrecta"})
 
     //Generamos el token
-    const token = jwt.sign({ userName: usuarioEx.userName }, process.env.SECRET_KEY_TOKEN )
+    const token = jwt.sign({ userName: usuarioEx.userName }, process.env.SECRET_KEY_TOKEN, { expiresIn: "12h" } )
 
     res.status(200).json({token})
 }
@@ -75,7 +75,13 @@ export const currentUser = async (req, res) => {
     try {
         if(req.body.token){
             const { userName } = jwt.decode(req.body.token);
-    
+            
+            if( !userName ){
+                return res.status(401).json({
+                    data: "Token invalido"
+                })
+            } 
+            
             const user = await User.findOne({
                 include:{
                     association: "comunidadAutonoma",

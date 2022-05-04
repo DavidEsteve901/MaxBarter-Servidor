@@ -10,12 +10,17 @@ router.post('/', ofertaCtrl.createOferta)
 
 router.get('/',verifyToken,ofertaCtrl.getOfertas)
 
+router.get('/',verifyToken,ofertaCtrl.getOfertas)
+
 router.get('/:ofertaId', ofertaCtrl.getOfertabyId)
 
 router.put('/:ofertaId', ofertaCtrl.updateOfertaById)
 
 router.delete('/:ofertaId', ofertaCtrl.deleteOfertaById)
 
+
+//Coger ofertas por página
+router.post('/page', ofertaCtrl.getOfertasByPage)
 
 
 export default router;
