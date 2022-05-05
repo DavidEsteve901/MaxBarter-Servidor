@@ -101,6 +101,7 @@ export const getProductosByPage = async (req, res) => {
         if(q){
             //Dependiendo de los fistros de busqueda que se pasen lo agregará a la condicion where
             const filter = {}
+            
             if(q.titulo){
                 filter.titulo = {[Op.like]: `%${q.titulo}%`}
             }
@@ -108,6 +109,11 @@ export const getProductosByPage = async (req, res) => {
             if(q.tipo){
                 filter.tipo = {[Op.like]: `%${q.tipo}%`}
             }
+
+            if(q.match !== "undefined"){
+                filter.match = {[Op.like]: q.match}
+            }
+            
 
             // if(q.comunidadAutonoma){
             //     filter.propietario = {[Op.like]: `%${q.comunidadAutonoma}%`}
@@ -190,6 +196,9 @@ export const getProductosByUser = async (req, res) => {
     try {
         const { userName } = req.params;
         const productos = await Producto.findAll({
+            where:{
+                match: false
+            },
             include:[
                 {
                     association: "propietario",
@@ -222,7 +231,7 @@ export const getProductosByUser = async (req, res) => {
 
 export const updateProductoById = async (req, res) => {
     const { id } = req.params;
-    const { titulo, descripcion, match ,tipo} = req.body;
+    const { titulo, descripcion ,tipo} = req.body;
 
     try {
 
@@ -237,7 +246,6 @@ export const updateProductoById = async (req, res) => {
         producto.update({
             titulo,
             descripcion,
-            match,
             tipo
         })
 

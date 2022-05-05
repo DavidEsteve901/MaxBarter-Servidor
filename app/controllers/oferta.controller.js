@@ -1,4 +1,6 @@
 const { Oferta } = require('../models')
+const { Producto } = require('../models')
+
 const { Op } = require('sequelize')
 
 import { paginate } from '../metodos/paginate';
@@ -31,7 +33,48 @@ export const createOferta = async (req,res) =>{
             rechazada: false
         })
 
-        
+
+        //Comprobamos que no exita otra oferta que apunte a los mismos produtos de forma inversa
+        //En ese caso significa que habrán hecho match
+        const ofertaExisteContrario = await Oferta.findOne({
+            where:{
+                activa: true,
+                rechazada: false,
+                [Op.and]: [{ producto1: oferta.producto2 }, { producto2: oferta.producto1 }] 
+            }
+        })
+
+        //En el caso de que exista una oferta a la inversa (al que recibe tu producto tambien ha pedido el mismo) siginica que ha hecho match, actualizamos todo
+        if(ofertaExisteContrario){
+            //Desactivamos aquellas ofertas en las que se tengan los productos
+            const ofertasDesactivar = await Oferta.findAll({
+                where:{
+                    [Op.or]: [{ producto1: oferta.producto1 }, { producto2: oferta.producto1 },
+                            { producto1: oferta.producto2 }, { producto2: oferta.producto2 } ] 
+                }
+            })
+
+
+            ofertasDesactivar.forEach(async oferta => {
+                await oferta.update({
+                    activa: false
+                })
+            });
+
+            //Activamos el match a los productos
+            const productosMatch = await Producto.findAll({
+                where:{
+                    [Op.or]: [{ id: oferta.producto1 }, { id: oferta.producto2 }] 
+                }
+            })
+
+            productosMatch.forEach(async producto => {
+                await producto.update({
+                    match: true
+                })
+            });
+        }
+  
 
         if (oferta) {
             return res.status(200).json({
@@ -165,5 +208,81 @@ export const updateOfertaById = async (req,res) =>{
 }
 
 export const deleteOfertaById = async (req,res) =>{
-    
+    try {
+        const { ofertaId } = req.params;
+        const deleteRowCount = await Oferta.destroy({
+            where: {
+                id : ofertaId
+            }
+        })
+
+        return res.status(200).json({
+            message: 'Oferta eliminado correctamente',
+            count: deleteRowCount
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const aceptarOferta = async (req,res) =>{
+    try {
+        const { ofertaId } = req.params;
+
+        //Buscamos el Producto 
+        const oferta = await Oferta.findOne({
+            where: {
+                id: ofertaId
+            }
+        });
+
+        await oferta.update({
+            activa: false
+        })
+
+        //Desactivamos aquellas ofertas en las que se tengan los productos
+        const ofertasDesactivar = await Oferta.findAll({
+            where:{
+                [Op.or]: [{ producto1: oferta.producto1 }, { producto2: oferta.producto1 },
+                        { producto1: oferta.producto2 }, { producto2: oferta.producto2 } ] 
+            }
+        })
+
+
+        ofertasDesactivar.forEach(async oferta => {
+            await oferta.update({
+                activa: false
+            })
+        });
+
+        //Activamos el match a los productos
+        const productosMatch = await Producto.findAll({
+            where:{
+                [Op.or]: [{ id: oferta.producto1 }, { id: oferta.producto2 }] 
+            }
+        })
+
+        productosMatch.forEach(async producto => {
+            await producto.update({
+                match: true
+            })
+        });
+
+
+        return res.status(200).json({
+            message: 'Match creado correctamente'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
 }

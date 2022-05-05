@@ -22,5 +22,7 @@ router.delete('/:ofertaId', ofertaCtrl.deleteOfertaById)
 //Coger ofertas por página
 router.post('/page', ofertaCtrl.getOfertasByPage)
 
+//Aceptar oferta
+router.post('/aceptarOferta/:ofertaId', ofertaCtrl.aceptarOferta)
 
 export default router;
