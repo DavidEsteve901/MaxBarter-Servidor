@@ -2,6 +2,8 @@
 
 const { User } = require('../models')
 const { Producto } = require('../models')
+const { Oferta } = require('../models')
+
 
 const path = require("path")
 const fs = require('fs').promises;
@@ -112,7 +114,7 @@ export const uploadImagenPerfil = async (req, res) => {
         })
 
         //Si tiene imagen de perfil que la elimine
-        if(usuario.imgPerfil){
+        if(usuario.imgPerfil && file_name){
             fs.unlink(path.join(__dirname, '..', 'uploads', usuario.imgPerfil))
             .then(() => {
                 console.log('Imagen eliminada')
@@ -137,6 +139,100 @@ export const uploadImagenPerfil = async (req, res) => {
 
         return res.status(200).json({
             message: 'Imagen de perfil creada',
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const userStats = async (req, res) => {
+
+
+    try {
+        const { userName } = req.params;
+        
+    
+        var { count } = await Producto.findAndCountAll({
+            where:{
+                user: userName,
+            }
+        })
+
+        const countProducts = count;
+
+        var { count } = await Producto.findAndCountAll({
+            where:{
+                user: userName,
+                match: true
+            }
+        })
+
+        const countMatchs = count
+
+        var { count } = await Oferta.findAndCountAll({
+            where:{
+                user1: userName,
+            }
+        })
+
+        const countOfertasPedidas = count
+
+        var { count } = await Oferta.findAndCountAll({
+            where:{
+                user2: userName,
+            }
+        })
+
+        const countOfertasRecibidas = count;
+
+        var {count} = await Oferta.findAndCountAll({
+            where:{
+                user1: userName,
+                rechazada: true
+            }
+        })
+        const countOfertasRechazadas = count;
+
+        const stats = {
+            numProductos: countProducts,
+            numMatchs: countMatchs,
+            numOfertasPedidas: countOfertasPedidas,
+            numOfertasRecibidas: countOfertasRecibidas,
+            numOfertasRezachadas: countOfertasRechazadas
+        }
+
+        return res.status(200).json({
+            data: stats
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+export const userMatchs = async (req, res) => {
+
+
+    try {
+        const { userName } = req.params;
+        
+        var {count} = await Producto.findAndCountAll({
+            where:{
+                user: userName,
+                match: true
+            }
+        })
+        const matchsUser = count;
+       
+        return res.status(200).json({
+            data: matchsUser
         })
     } catch (error) {
         console.log(error);

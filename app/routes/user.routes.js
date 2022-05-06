@@ -13,4 +13,10 @@ router.put('/updateUser', userCtrl.updateUser)
 //Subir imagen de perfil
 router.post('/uploadImage/:userName',verifyToken, uploadImgPerfil.single('files') ,userCtrl.uploadImagenPerfil)
 
+//Match del usuario
+router.get('/matchs/:userName', userCtrl.userMatchs)
+
+//Coger estadisticas de usuario
+router.get('/stats/:userName', userCtrl.userStats)
+
 export default router;
