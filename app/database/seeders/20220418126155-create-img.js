@@ -7,7 +7,7 @@ module.exports = {
 
     let imagenes = [
       {url:"Foto-Perfil.jpg"},
-
+      {url:"pruebaProducto.jpg",producto:"2"}
     ];
 
     return queryInterface.bulkInsert('imagen', imagenes, {});

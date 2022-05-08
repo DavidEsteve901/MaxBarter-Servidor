@@ -196,9 +196,9 @@ export const getProductosByUser = async (req, res) => {
     try {
         const { userName } = req.params;
         const productos = await Producto.findAll({
-            where:{
-                match: false
-            },
+            // where:{
+            //     match: false
+            // },
             include:[
                 {
                     association: "propietario",
