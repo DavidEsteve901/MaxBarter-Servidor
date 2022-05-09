@@ -8,8 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   const Oferta = sequelize.define('Oferta', {
 
     activa: DataTypes.BOOLEAN,
-    rechazada: DataTypes.BOOLEAN
-
+    rechazada: DataTypes.BOOLEAN,
   }, {
     tableName: "Oferta"
     

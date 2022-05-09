@@ -6,8 +6,8 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
 
     let imagenes = [
-      {url:"Foto-Perfil.jpg"},
-      {url:"pruebaProducto.jpg",producto:"2"}
+      {url:"pruebaProducto.jpeg",producto:"2"},
+      {url:"prueba2Producto.jpeg",producto:"3"}
     ];
 
     return queryInterface.bulkInsert('imagen', imagenes, {});

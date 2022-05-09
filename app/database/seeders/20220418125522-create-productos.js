@@ -20,14 +20,14 @@ module.exports = {
         descripcion: 'Descripción del producto',
         match: true,
         user: "prueba",
-        tipo: 1
+        tipo: 14
       }),
       Producto.create({
         titulo: 'Producto',
         descripcion: 'Descripción del producto',
         match: true,
         user: "prueba2",
-        tipo: 2
+        tipo: 6
       }),
       Producto.create({
         titulo: 'Caja',

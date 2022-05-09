@@ -28,8 +28,8 @@ router.get('/user/:userName', productoCtrl.getProductosByUser)
 router.post('/uploadImages/:idProducto',verifyToken, uploadImgsProducto.array('files') ,productoCtrl.uploadImagenes)
 
 //Coger imagenes
-router.post('/imagenes',verifyToken, productoCtrl.getImagenes)
-router.post('/imagen',verifyToken, productoCtrl.getImagenProducto)
+router.post('/imagenes', productoCtrl.getImagenes)
+router.post('/imagen', productoCtrl.getImagenProducto)
 
 
 

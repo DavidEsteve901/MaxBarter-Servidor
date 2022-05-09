@@ -12,8 +12,9 @@ module.exports = {
         activa:false,
         producto1:2,
         producto2:3,
-        user1:3,
-        user2:4
+        user1:"prueba",
+        user2:"prueba2",
+        
       }),
     ])
   },
@@ -21,6 +22,6 @@ module.exports = {
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('ofertas', null, {});
+    return queryInterface.bulkDelete('oferta', null, {});
   }
 };
