@@ -106,8 +106,8 @@ export const getProductosByPage = async (req, res) => {
                 filter.titulo = {[Op.like]: `%${q.titulo}%`}
             }
 
-            if(q.tipo){
-                filter.tipo = {[Op.like]: `%${q.tipo}%`}
+            if(q.tipo && q.tipo > 0 ){
+                filter.tipo = {[Op.like]: q.tipo}
             }
 
             if(q.match !== "undefined"){
