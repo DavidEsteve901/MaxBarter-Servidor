@@ -6,7 +6,11 @@ var bcrypt  = require('bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   
   const Producto = sequelize.define('Producto', {
-
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     titulo: DataTypes.STRING,
     descripcion: DataTypes.STRING,
 

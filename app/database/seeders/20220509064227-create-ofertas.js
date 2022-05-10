@@ -10,8 +10,8 @@ module.exports = {
     return Promise.all([
       Oferta.create({
         activa:false,
-        producto1:2,
-        producto2:3,
+        producto1:1,
+        producto2:2,
         user1:"prueba",
         user2:"prueba2",
         
