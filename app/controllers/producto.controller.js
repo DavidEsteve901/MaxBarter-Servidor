@@ -349,14 +349,14 @@ export const getImagenes = async (req, res) => {
     try {
         const { id } = req.body;
 
-        console.log(id)
+        
         const imagenes = await Imagen.findAll({
             where:{
                 producto: id
             }
         });
 
-        if(!imagenes){
+        if(imagenes.length == 0 || !imagenes){
             return res.status(404).json("El producto no tiene imagenes")
         }
 

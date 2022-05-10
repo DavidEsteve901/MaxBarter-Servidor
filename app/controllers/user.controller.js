@@ -79,8 +79,8 @@ export const getImagenPerfil = async (req, res) => {
                 userName: userName
             }
         });
-
-        if(!Usuario){
+        
+        if(!Usuario.imgPerfil){
             return res.status(404).json("No existe la imagen")
         }
 
