@@ -14,9 +14,14 @@ export const createOferta = async (req,res) =>{
             where:{
                 producto1,
                 producto2,
+                user1,
+                user2,
+                rechazada: false,
+                activa:true
             }
         })
 
+        console.log(ofertaExiste)
         if(ofertaExiste){
             return res.status(400).json({
                 message: 'Oferta ya creada con el producto',
@@ -285,4 +290,36 @@ export const aceptarOferta = async (req,res) =>{
             data: {}
         });
     }
+
+    
+}
+
+export const rechazarOferta = async (req,res) =>{
+    try {
+        const { ofertaId } = req.params;
+
+        //Buscamos el Producto 
+        const oferta = await Oferta.findOne({
+            where: {
+                id: ofertaId
+            }
+        });
+
+        await oferta.update({
+            rechazada: true,
+            activa: false
+        })
+
+        return res.status(200).json({
+            message: 'Oferta rechazada correctamente'
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+
 }

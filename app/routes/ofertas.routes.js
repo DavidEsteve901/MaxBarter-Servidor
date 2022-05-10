@@ -25,4 +25,7 @@ router.post('/page', ofertaCtrl.getOfertasByPage)
 //Aceptar oferta
 router.post('/aceptarOferta/:ofertaId', ofertaCtrl.aceptarOferta)
 
+//Rechazar oferta
+router.post('/rechazarOferta/:ofertaId', ofertaCtrl.rechazarOferta)
+
 export default router;
