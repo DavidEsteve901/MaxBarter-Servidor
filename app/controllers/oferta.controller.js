@@ -21,7 +21,7 @@ export const createOferta = async (req,res) =>{
             }
         })
 
-        console.log(ofertaExiste)
+        
         if(ofertaExiste){
             return res.status(400).json({
                 message: 'Oferta ya creada con el producto',
@@ -54,15 +54,33 @@ export const createOferta = async (req,res) =>{
             //Desactivamos aquellas ofertas en las que se tengan los productos
             const ofertasDesactivar = await Oferta.findAll({
                 where:{
-                    [Op.or]: [{ producto1: oferta.producto1 }, { producto2: oferta.producto1 },
-                            { producto1: oferta.producto2 }, { producto2: oferta.producto2 } ] 
+                    [Op.or]: [{ producto1: oferta.producto1 }, { producto2: oferta.producto1 }],
+                    [Op.or]: [{ producto1: oferta.producto2 }, { producto2: oferta.producto2 }]
                 }
             })
 
 
             ofertasDesactivar.forEach(async oferta => {
                 await oferta.update({
-                    activa: false
+                    activa: false,
+                })
+            });
+
+            //Eliminamos  aquellas ofertas en las que se tengan los productos
+            const ofertasEliminar = await Oferta.findAll({
+                where:{
+                    [Op.and]: [
+                        [Op.or] { producto1: oferta.producto1 }
+                        , 
+                        { producto2: oferta.producto1 }],
+                    [Op.or]: [{ producto1: oferta.producto2 }, { producto2: oferta.producto2 }]
+                }
+            })
+
+
+            ofertasEliminar.forEach(async oferta => {
+                await oferta.destroy({
+                    id: oferta.id,
                 })
             });
 
@@ -145,6 +163,17 @@ export const getOfertasByPage = async (req,res) =>{
             }
         
         ]
+
+        //Comprobamos que si buscamos los match que los productos de las ofertas tengan el match true
+        if(q.match){
+            associations[0]['where'] = {
+                match: true
+            }
+
+            associations[1]['where'] = {
+                match: true
+            }
+        }
 
 
         if(q){
