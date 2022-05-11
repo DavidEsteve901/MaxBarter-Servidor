@@ -3,10 +3,14 @@
 const { User } = require('../models')
 const { Producto } = require('../models')
 const { Oferta } = require('../models')
+import { paginate } from '../metodos/paginate';
+
 
 
 const path = require("path")
 const fs = require('fs').promises;
+const { Op } = require('sequelize')
+
 
 export const getUserById = async (req, res) => {
     const { id } = req.params;
@@ -234,6 +238,76 @@ export const userMatchs = async (req, res) => {
         return res.status(200).json({
             data: matchsUser
         })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Se produjo un error',
+            data: {}
+        });
+    }
+}
+
+
+export const getUsersByPage = async (req, res) => {
+    try {
+        //Cojo los parametros de la peticion
+        const { q, page, limit, order_by, order_direction } = req.body;
+
+        let search = {};
+        let order = [];
+
+        const associations = 
+            {
+                
+                association: "comunidadAutonoma",
+                
+            }         
+        ;
+
+
+        if(q){
+            //Dependiendo de los fistros de busqueda que se pasen lo agregará a la condicion where
+            const filter = {}
+            
+            if(q.userName){
+                filter.user_name = {[Op.like]: `%${q.userName}%`}
+            }
+            
+
+            // if(q.comunidadAutonoma){
+            //     filter.propietario = {[Op.like]: `%${q.comunidadAutonoma}%`}
+            // }
+
+
+            search = {
+                where: filter
+            };
+        }
+
+        //Añado los aprametros de orden
+        if(order_by && order_direction){
+            order.push([order_by,order_direction])
+        }
+
+        //Método de transformación que puedo pasar al método de paginación
+        // const transform = (records) =>{
+        //     return records.map(record =>{
+        //         return {
+        //             id: record.id, 
+        //         }
+        //     })
+        // }
+        const transform = null;
+
+        //Método de paianción en el que le pasas el Modelo, page, limit, search object, order, transform y asociaciones
+        const users = await paginate(User, page, limit, search, order, transform, associations);
+
+        return res.status(200).send({
+            success: true,
+            message: 'Lista de Usuarios',
+            data: users
+        })
+
     } catch (error) {
         console.log(error);
         res.status(500).json({

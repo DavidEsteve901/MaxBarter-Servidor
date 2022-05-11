@@ -19,4 +19,7 @@ router.get('/matchs/:userName', userCtrl.userMatchs)
 //Coger estadisticas de usuario
 router.get('/stats/:userName', userCtrl.userStats)
 
+//Cogemos usuarios por pagina
+router.post('/page',userCtrl.getUsersByPage)
+
 export default router;

@@ -349,7 +349,10 @@ export const getImagenes = async (req, res) => {
     try {
         const { id } = req.body;
 
-        
+        if(!id){
+            return res.status(404).json("No se ha pasado id")
+        }
+
         const imagenes = await Imagen.findAll({
             where:{
                 producto: id

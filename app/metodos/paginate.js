@@ -27,7 +27,7 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
 
         //Ponemos el límite de productos
         options['limit'] = limit;
-
+        
         // Le paso las opciones (no lo hago por varible porque no funcionan las asociaciones)
         // asimilar el modelo, asimilar las opciones
         let {count, rows} = await model.findAndCountAll(options);
@@ -37,7 +37,6 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
         if (transform && typeof transform === 'function') {
            rows = transform(rows);
         }
-
         
         return {
             previousPage: getPreviousPage(page),
