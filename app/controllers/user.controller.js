@@ -256,12 +256,14 @@ export const getUsersByPage = async (req, res) => {
         let search = {};
         let order = [];
 
-        const associations = 
+        const associations =
+        [
             {
                 
                 association: "comunidadAutonoma",
                 
-            }         
+            } 
+        ] 
         ;
 
 
@@ -271,6 +273,10 @@ export const getUsersByPage = async (req, res) => {
             
             if(q.userName){
                 filter.user_name = {[Op.like]: `%${q.userName}%`}
+            }
+
+            if(q.comunidadAutonoma){
+                filter.comunidadAutonomaId = {[Op.like]: q.comunidadAutonoma}
             }
             
 
