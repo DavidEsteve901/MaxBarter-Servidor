@@ -66,24 +66,6 @@ export const createOferta = async (req,res) =>{
                 })
             });
 
-            //Eliminamos  aquellas ofertas en las que se tengan los productos
-            const ofertasEliminar = await Oferta.findAll({
-                where:{
-                    [Op.and]: [
-                        [Op.or] { producto1: oferta.producto1 }
-                        , 
-                        { producto2: oferta.producto1 }],
-                    [Op.or]: [{ producto1: oferta.producto2 }, { producto2: oferta.producto2 }]
-                }
-            })
-
-
-            ofertasEliminar.forEach(async oferta => {
-                await oferta.destroy({
-                    id: oferta.id,
-                })
-            });
-
             //Activamos el match a los productos
             const productosMatch = await Producto.findAll({
                 where:{
@@ -96,6 +78,78 @@ export const createOferta = async (req,res) =>{
                     match: true
                 })
             });
+
+            //Eliminamos  aquellas ofertas en las que se tengan los productos
+            const ofertasEliminar = await Oferta.findAll({
+                where:{
+                    [Op.or]:[
+                        {
+                            [Op.or]:[
+                                {
+                                    [Op.and]: [
+                                        { producto1: oferta.producto1 }
+                                        , 
+                                        { 
+                                            producto2: {
+                                                [Op.ne]: oferta.producto2
+                                            }
+                                        } 
+                                    ]
+                                } ,
+                                {
+                                    [Op.and]: [
+                                        { producto1: oferta.producto2 }
+                                        , 
+                                        { 
+                                            producto2: {
+                                                [Op.ne]: oferta.producto1
+                                            }
+                                        } 
+                                    ],
+                                }
+                                
+                            ]
+                        },
+                        {
+                            [Op.or]:[
+                                {
+                                    [Op.and]: [
+                                        { producto2: oferta.producto1 }
+                                        , 
+                                        { 
+                                            producto1: {
+                                                [Op.ne]: oferta.producto2
+                                            }
+                                        } 
+                                    ]
+                                } ,
+                                {
+                                    [Op.and]: [
+                                        { producto2: oferta.producto2 }
+                                        , 
+                                        { 
+                                            producto1: {
+                                                [Op.ne]: oferta.producto1
+                                            }
+                                        } 
+                                    ],
+                                }
+                                
+                            ]
+                        }
+                    ]
+                   
+                   
+                }
+            })
+
+            ofertasEliminar.forEach(async oferta => {
+                await oferta.destroy({
+                    id: oferta.id,
+                })
+            });
+
+            
         }
   
 
@@ -178,13 +232,21 @@ export const getOfertasByPage = async (req,res) =>{
 
         if(q){
             //Dependiendo de los fistros de busqueda que se pasen lo agregará a la condicion where
-            const filter = {}
+            var filter = {}
             if(q.userRecibe){
                 filter.user2 = {[Op.like]: q.userRecibe }
             }
 
             if(q.userPide){
                 filter.user1 = {[Op.like]: q.userPide }
+            }
+
+            
+            //Si le pasamor el userMatch cogerá aquellas ofertas que tenga el usuario
+            if(q.userMatch){
+                filter = {
+                    [Op.or]: [{user1: q.userMatch },{user2: q.userMatch }]
+                }
             }
 
             if(typeof q.activa !== 'undefined'){
@@ -216,8 +278,28 @@ export const getOfertasByPage = async (req,res) =>{
         const transform = null;
 
         //Método de paianción en el que le pasas el Modelo, page, limit, search object, order, transform y asociaciones
-        const ofertas = await paginate(Oferta, page, limit, search, order, transform, associations);
+        var ofertas = await paginate(Oferta, page, limit, search, order, transform, associations);
 
+        if(q.userMatch){
+            //Vamos a filtrar aquellas ofertas que se repiten
+            var ofertasFiltradas = []
+            ofertas.data.forEach(oferta => {
+                var guardar = true
+                ofertasFiltradas.forEach(ofertaFiltra => {
+                    if(oferta.producto1 == ofertaFiltra.producto2 ){
+                        guardar = false
+                    }
+                });
+
+                if(guardar){
+                    ofertasFiltradas.push(oferta)
+                }
+            });
+
+            ofertas = ofertasFiltradas;
+            console.log(ofertas)
+        }
+        
         return res.status(200).send({
             success: true,
             message: 'Lista de Ofertas',
@@ -304,6 +386,76 @@ export const aceptarOferta = async (req,res) =>{
         productosMatch.forEach(async producto => {
             await producto.update({
                 match: true
+            })
+        });
+
+        //Eliminamos  aquellas ofertas en las que se tengan los productos
+        const ofertasEliminar = await Oferta.findAll({
+            where:{
+                [Op.or]:[
+                    {
+                        [Op.or]:[
+                            {
+                                [Op.and]: [
+                                    { producto1: oferta.producto1 }
+                                    , 
+                                    { 
+                                        producto2: {
+                                            [Op.ne]: oferta.producto2
+                                        }
+                                    } 
+                                ]
+                            } ,
+                            {
+                                [Op.and]: [
+                                    { producto1: oferta.producto2 }
+                                    , 
+                                    { 
+                                        producto2: {
+                                            [Op.ne]: oferta.producto1
+                                        }
+                                    } 
+                                ],
+                            }
+                            
+                        ]
+                    },
+                    {
+                        [Op.or]:[
+                            {
+                                [Op.and]: [
+                                    { producto2: oferta.producto1 }
+                                    , 
+                                    { 
+                                        producto1: {
+                                            [Op.ne]: oferta.producto2
+                                        }
+                                    } 
+                                ]
+                            } ,
+                            {
+                                [Op.and]: [
+                                    { producto2: oferta.producto2 }
+                                    , 
+                                    { 
+                                        producto1: {
+                                            [Op.ne]: oferta.producto1
+                                        }
+                                    } 
+                                ],
+                            }
+                            
+                        ]
+                    }
+                ]
+               
+               
+            }
+        })
+
+        ofertasEliminar.forEach(async oferta => {
+            await oferta.destroy({
+                id: oferta.id,
             })
         });
 
