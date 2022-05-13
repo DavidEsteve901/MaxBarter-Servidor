@@ -20,7 +20,7 @@ router.delete('/:ofertaId',verifyToken, ofertaCtrl.deleteOfertaById)
 
 
 //Coger ofertas por página
-router.post('/page',verifyToken, ofertaCtrl.getOfertasByPage)
+router.post('/page', ofertaCtrl.getOfertasByPage)
 
 //Aceptar oferta
 router.post('/aceptarOferta/:ofertaId',verifyToken, ofertaCtrl.aceptarOferta)

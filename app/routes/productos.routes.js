@@ -22,14 +22,14 @@ router.put('/:id',verifyToken,verifyUserEdit, productoCtrl.updateProductoById)
 router.delete('/:id',verifyToken,verifyUserEdit, productoCtrl.deleteProductoById)
 
 //Productos por usuario
-router.get('/user/:userName',verifyToken, productoCtrl.getProductosByUser)
+router.get('/user/:userName', productoCtrl.getProductosByUser)
 
 //Subir imagenes de producto
 router.post('/uploadImages/:id',verifyToken,verifyUserEdit, uploadImgsProducto.array('files') ,productoCtrl.uploadImagenes)
 
 //Coger imagenes
-router.post('/imagenes',verifyToken, productoCtrl.getImagenes)
-router.post('/imagen',verifyToken, productoCtrl.getImagenProducto)
+router.post('/imagenes', productoCtrl.getImagenes)
+router.post('/imagen', productoCtrl.getImagenProducto)
 
 
 

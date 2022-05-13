@@ -28,7 +28,7 @@ export const verifyToken = async (req,res,next) =>{
     //Le pasamos como respuesta un atributo con el id del usuario
     req.userId = tokenEnviado.userName
 
-    next()
+    return next()
 }
 
 export const verifyUserEdit = async (req,res,next) =>{
@@ -52,7 +52,8 @@ export const verifyUserEdit = async (req,res,next) =>{
         })
 
         if(isAdmin){
-            next()
+            console.log("ES ADMIN")
+            return next()
         }
 
         const productos = await Producto.findAll({
@@ -67,7 +68,7 @@ export const verifyUserEdit = async (req,res,next) =>{
             return res.status(401).json("No tienes acceso")
         }
 
-        next()
+        return next()
 
     } catch (error) {
         console.log(error);
@@ -103,7 +104,7 @@ export const verifyIsUser = async (req,res,next) =>{
         })
 
         if(isAdmin){
-            next()
+            return next()
         }
         
         const isUser = await User.findOne({
