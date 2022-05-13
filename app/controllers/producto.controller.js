@@ -295,12 +295,12 @@ export const uploadImagenes = async (req, res) => {
 
 
     try {
-        const { idProducto } = req.params;
+        const { id } = req.params;
         const { files } = req;
 
         const imagenes = await Imagen.findAll({
             where: {
-                producto: idProducto
+                producto: id
             }
         })
 
@@ -313,7 +313,7 @@ export const uploadImagenes = async (req, res) => {
             //Eliminamos las relaciones creadas en el modelo Imagen de aquellas que hemos eliminado
             await Imagen.destroy({
                 where: {
-                    producto: idProducto
+                    producto: id
                 }
             })
 
@@ -321,7 +321,7 @@ export const uploadImagenes = async (req, res) => {
             files.forEach(async file => {
                 await Imagen.create({
                     url: file.filename,
-                    producto: idProducto
+                    producto: id
                 })
             });
         })

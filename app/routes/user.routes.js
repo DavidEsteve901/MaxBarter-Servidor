@@ -3,15 +3,15 @@ const router = Router();
 
 //Importamos todos los métodos
 import * as userCtrl from '../controllers/user.controller'
-import { verifyToken, uploadImgPerfil } from '../middlewares/index'
+import { verifyToken, uploadImgPerfil,verifyIsUser } from '../middlewares/index'
 
 
 router.get('/:id', userCtrl.getUserById)
 router.post('/perfil', userCtrl.getImagenPerfil)
-router.put('/updateUser', userCtrl.updateUser)
+router.put('/updateUser',verifyToken,verifyIsUser, userCtrl.updateUser)
 
 //Subir imagen de perfil
-router.post('/uploadImage/:userName',verifyToken, uploadImgPerfil.single('files') ,userCtrl.uploadImagenPerfil)
+router.post('/uploadImage/:userName',verifyToken,verifyIsUser, uploadImgPerfil.single('files') ,userCtrl.uploadImagenPerfil)
 
 //Match del usuario
 router.get('/matchs/:userName', userCtrl.userMatchs)

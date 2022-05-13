@@ -107,7 +107,7 @@ module.exports = {
       }),
       Producto.create({
         id:13,
-        titulo: "Conga1.090 cecotec",
+        titulo: "Robot Conga 4090",
         descripcion: "Aspirador perfecto para eliminar el pelo que suelta las mascotas, aspira y friega a la vez, tiene 2 cepillos centrales intercambiables y se carga sola.",
         match: false,
         user: "pablo",

@@ -6,26 +6,26 @@ import * as ofertaCtrl from '../controllers/oferta.controller'
 //Importamos middlewares
 import { verifyToken } from '../middlewares/index'
 
-router.post('/', ofertaCtrl.createOferta)
+router.post('/',verifyToken, ofertaCtrl.createOferta)
 
 router.get('/',verifyToken,ofertaCtrl.getOfertas)
 
 router.get('/',verifyToken,ofertaCtrl.getOfertas)
 
-router.get('/:ofertaId', ofertaCtrl.getOfertabyId)
+router.get('/:ofertaId',verifyToken, ofertaCtrl.getOfertabyId)
 
-router.put('/:ofertaId', ofertaCtrl.updateOfertaById)
+router.put('/:ofertaId',verifyToken, ofertaCtrl.updateOfertaById)
 
-router.delete('/:ofertaId', ofertaCtrl.deleteOfertaById)
+router.delete('/:ofertaId',verifyToken, ofertaCtrl.deleteOfertaById)
 
 
 //Coger ofertas por página
-router.post('/page', ofertaCtrl.getOfertasByPage)
+router.post('/page',verifyToken, ofertaCtrl.getOfertasByPage)
 
 //Aceptar oferta
-router.post('/aceptarOferta/:ofertaId', ofertaCtrl.aceptarOferta)
+router.post('/aceptarOferta/:ofertaId',verifyToken, ofertaCtrl.aceptarOferta)
 
 //Rechazar oferta
-router.post('/rechazarOferta/:ofertaId', ofertaCtrl.rechazarOferta)
+router.post('/rechazarOferta/:ofertaId',verifyToken, ofertaCtrl.rechazarOferta)
 
 export default router;
