@@ -22,6 +22,6 @@ module.exports = {
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('oferta', null, {});
+    return queryInterface.bulkDelete('Oferta', null, {});
   }
 };

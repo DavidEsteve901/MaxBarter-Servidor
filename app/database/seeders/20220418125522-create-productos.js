@@ -153,6 +153,6 @@ module.exports = {
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('producto', null, {});
+    return queryInterface.bulkDelete('Producto', null, {});
   }
 };

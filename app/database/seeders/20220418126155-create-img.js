@@ -77,12 +77,12 @@ module.exports = {
 
     ];
 
-    return queryInterface.bulkInsert('imagen', imagenes, {});
+    return queryInterface.bulkInsert('Imagen', imagenes, {});
   },
 
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('imagen', null, {});
+    return queryInterface.bulkDelete('Imagen', null, {});
   }
 };

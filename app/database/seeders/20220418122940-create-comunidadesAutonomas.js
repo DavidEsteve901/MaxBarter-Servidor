@@ -29,12 +29,12 @@ module.exports = {
 
     ];
 
-    return queryInterface.bulkInsert('comunidadautonoma', comunidadesAutonomas, {});
+    return queryInterface.bulkInsert('ComunidadAutonoma', comunidadesAutonomas, {});
   },
 
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.bulkDelete('comunidadautonoma', null, {});
+    return queryInterface.bulkDelete('ComunidadAutonoma', null, {});
   }
 };

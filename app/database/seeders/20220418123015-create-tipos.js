@@ -23,14 +23,14 @@ module.exports = {
       {nombre:"Coleccionismo"},
     ];
 
-    return queryInterface.bulkInsert('tipo', tipos, {});
+    return queryInterface.bulkInsert('Tipo', tipos, {});
   },
 
   // Esto se ejecuta cuando se deshace la siembra
   down: (queryInterface, Sequelize) => {
     
      
-    return queryInterface.bulkDelete('tipo', null, {});
+    return queryInterface.bulkDelete('Tipo', null, {});
     
   }
 };
