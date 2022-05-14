@@ -42,7 +42,7 @@ export const verifyUserEdit = async (req,res,next) =>{
         var isAdmin = false;
 
         //Pasamos los roles a JSON
-        user.roles = JSON.parse(user.roles)
+        // user.roles = JSON.parse(user.roles)
 
         //Vemos si el usuario es admin
         user.roles.find((role)=>{
@@ -94,7 +94,7 @@ export const verifyIsUser = async (req,res,next) =>{
         var isAdmin = false;
 
         //Pasamos los roles a JSON
-        user.roles = JSON.parse(user.roles)
+        // user.roles = JSON.parse(user.roles)
 
         //Vemos si el usuario es admin
         user.roles.find((role)=>{
