@@ -24,7 +24,15 @@ app.set('pkg',pkg)
 
 // Middleware
 // Para poder rellenar el req.body
-app.use(cors()) //Establecemos el cors para las peticiones
+app.use(cors({
+    origin:[
+        'http://www.maxbarter.tk',
+        'https://www.maxbarter.tk',
+        'http://localhost',
+        'https://localhost',
+
+    ]
+})) //Establecemos el cors para las peticiones
 app.use(express.json()); //Para que pueda entender los objetos JSON
 app.use(express.urlencoded({ extended: false }));
 
