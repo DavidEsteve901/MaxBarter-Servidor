@@ -28,9 +28,8 @@ app.use(cors({
     origin:[
         'http://www.maxbarter.tk',
         'https://www.maxbarter.tk',
-        'http://localhost',
-        'https://localhost',
-
+        'http://localhost:4200',
+        'https://localhost:4200',
     ]
 })) //Establecemos el cors para las peticiones
 app.use(express.json()); //Para que pueda entender los objetos JSON
