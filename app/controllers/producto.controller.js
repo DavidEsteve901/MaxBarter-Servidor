@@ -269,11 +269,20 @@ export const deleteProductoById = async (req, res) => {
 
     try {
         const { id } = req.params;
+
+        const deleteImages = await Imagen.destroy({
+            where: {
+                producto: id
+            }
+        })
+
         const deleteRowCount = await Producto.destroy({
             where: {
                 id
             }
         })
+
+        
 
         return res.status(200).json({
             message: 'Producto eliminado correctamente',
@@ -349,7 +358,7 @@ export const getImagenes = async (req, res) => {
     try {
         const { id } = req.body;
 
-        if(!id){
+        if(!id || id === "null"){
             return res.status(404).json("No se ha pasado id")
         }
 
